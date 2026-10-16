@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>国家運営｜税金フローチャート</title>
+<style>
+:root{--bg:#0b1020;--panel:#141c30;--line:#34435e;--text:#edf3ff;--muted:#a9b7d0;--blue:#6ca8ff;--green:#5dd6a0;--gold:#f2c76b;--red:#ff8181}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#182747 0,#0b1020 55%);color:var(--text);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;line-height:1.65}
+header{padding:32px 18px 22px;text-align:center}header .eyebrow{color:var(--blue);font-weight:700;letter-spacing:.12em;font-size:.8rem}h1{margin:.35rem 0;font-size:clamp(1.65rem,5vw,2.6rem)}header p{margin:.35rem auto;color:var(--muted);max-width:700px}
+main{max-width:1000px;margin:auto;padding:0 14px 48px}.section{background:#111a2cdd;border:1px solid var(--line);border-radius:18px;padding:20px;margin:16px 0;box-shadow:0 12px 35px #0002}.section h2{margin:0 0 14px;font-size:1.25rem}.flow{display:flex;flex-direction:column;align-items:center;gap:8px}.node{width:min(100%,650px);padding:13px 16px;border:1px solid #425675;border-radius:12px;background:linear-gradient(135deg,#1b2943,#141d31);text-align:center}.node strong{display:block}.node small{display:block;color:var(--muted);margin-top:3px}.start{border-color:var(--blue);background:#142b4c}.end{border-color:var(--green);background:#123329}.arrow{color:#8ba3c7;font-size:1.35rem;line-height:1}.branch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%;max-width:850px}.branch .node{width:100%;height:100%}.tag{display:inline-block;border-radius:999px;background:#263957;padding:2px 9px;font-size:.78rem;color:#cfe0ff;margin-bottom:5px}
+table{width:100%;border-collapse:collapse;margin:8px 0 12px;font-size:.94rem}th,td{text-align:left;padding:10px 9px;border-bottom:1px solid #2c3b55}th{color:#bcd0f0;font-weight:700}td:last-child,th:last-child{text-align:right;white-space:nowrap}
+.note{color:var(--muted);font-size:.9rem}.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}
+.calc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{background:#0e1728;border:1px solid #2e405e;border-radius:12px;padding:13px}.field label{display:block;color:#c5d3e9;font-size:.9rem;margin-bottom:5px}.field input{width:100%;padding:10px 11px;border-radius:8px;border:1px solid #405473;background:#080f1d;color:white;font-size:1rem}
+.result{background:#0d1728;border:1px solid #2d4160;border-radius:12px;padding:15px;margin-top:12px}.result strong{font-size:1.3rem;color:var(--green)}.pill{display:inline-block;border:1px solid #435b7b;border-radius:99px;padding:3px 10px;margin:4px 4px 0 0;font-size:.85rem}
+footer{text-align:center;color:#8192af;padding:0 16px 28px;font-size:.82rem}
+@media(max-width:600px){.branch,.calc-grid{grid-template-columns:1fr}.section{padding:15px}.node{padding:12px}.section h2{font-size:1.1rem}table{font-size:.86rem}th,td{padding:8px 5px}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">NATION MANAGEMENT SYSTEM</div>
+<h1>🏛️ 税金制度フローチャート</h1>
+<p>税収を計算し、国庫を運用。最後に国庫残高に応じた生産デバフを確認する。</p>
+</header>
+<main>
+<section class="section">
+<h2>📊 1日の処理フロー</h2>
+<div class="flow">
+<div class="node start"><strong>1日の税収計算開始</strong><small>人口税と金の税収をそれぞれ計算</small></div>
+<div class="arrow">↓</div>
+<div class="branch">
+<div class="node"><span class="tag">人口税</span><strong>人口を段階別に分ける</strong><small>各段階に入る人口だけに税率を適用</small></div>
+<div class="node"><span class="tag">金の税収</span><strong>毎日の金生産量を確認</strong><small>課税対象は最大100,000金／日</small></div>
+</div>
+<div class="arrow">↓</div>
+<div class="branch">
+<div class="node"><strong>人口税を合計</strong><small>4段階の税収を足し合わせる</small></div>
+<div class="node"><strong>金税を計算</strong><small>課税対象100金につき1,000国庫</small></div>
+</div>
+<div class="arrow">↓</div>
+<div class="node"><strong>人口税＋金税</strong><small>2種類の税収を合算する</small></div>
+<div class="arrow">↓</div>
+<div class="node"><strong>国庫に税収を加算</strong><small>元の金・資源は税収によって減らない</small></div>
+<div class="arrow">↓</div>
+<div class="node"><strong>国庫を使う？</strong><small>支出する場合は、目的に応じた生産ボーナスを適用</small></div>
+<div class="arrow">↓</div>
+<div class="branch">
+<div class="node"><strong>🟩 生産＋1</strong><small>5,000国庫</small></div>
+<div class="node"><strong>色資源の生産＋1</strong><small>10,000国庫で対象1種類<br>🟨は対象外</small></div>
+<div class="node"><strong>土木資源の生産＋1</strong><small>20,000国庫で木・石・金属から1種類</small></div>
+<div class="node"><strong>支出しない</strong><small>国庫残高を維持</small></div>
+</div>
+<div class="arrow">↓</div>
+<div class="node"><strong>現在の国庫残高を確認</strong><small>累計税収ではなく、支出後の残高で判定</small></div>
+<div class="arrow">↓</div>
+<div class="node"><strong>デバフ段階を決定</strong><small>国庫10万ごとに1段階。対象資源の毎日生産を段階数分だけ減少</small></div>
+<div class="arrow">↓</div>
+<div class="node end"><strong>1日の処理終了</strong></div>
+</div>
+</section>
+
+<section class="section">
+<h2>① 人口税の税率</h2>
+<table><thead><tr><th>人口の範囲</th><th>1人あたりの税収</th></tr></thead><tbody>
+<tr><td>最初の1万人</td><td>1,000国庫</td></tr>
+<tr><td>1万人超〜10万人の部分</td><td>100国庫</td></tr>
+<tr><td>10万人超〜100万人の部分</td><td>10国庫</td></tr>
+<tr><td>100万人超〜1,000万人の部分</td><td>1国庫</td></tr>
+<tr><td>1,000万人を超える部分</td><td>0国庫</td></tr>
+</tbody></table>
+<p class="note">累進方式：人口全体に一律の税率をかけず、各段階に該当する人口ごとに計算します。</p>
+</section>
+
+<section class="section">
+<h2>② 金の税収</h2>
+<div class="branch">
+<div class="node"><strong>課税対象</strong><small>毎日の金生産量のうち最大100,000金</small></div>
+<div class="node"><strong>税率</strong><small>100金につき1,000国庫</small></div>
+</div>
+<div class="result"><span class="gold">最大税収</span><br><strong>1,000,000国庫／日</strong><p class="note">税収を得ても、元の金は差し引きません。</p></div>
+</section>
+
+<section class="section">
+<h2>③ 国庫の使い道</h2>
+<table><thead><tr><th>支出額</th><th>効果</th></tr></thead><tbody>
+<tr><td>5,000国庫</td><td>🟩の毎日生産＋1</td></tr>
+<tr><td>10,000国庫</td><td>🟥・🟦・🟩から1種類の毎日生産＋1（🟨は対象外）</td></tr>
+<tr><td>20,000国庫</td><td>木・石・金属から1種類の毎日生産＋1</td></tr>
+</tbody></table>
+<p class="note">支出によって国庫残高が下がると、デバフ段階も下がる場合があります。</p>
+</section>
+
+<section class="section">
+<h2>④ 国庫デバフ早見表</h2>
+<table><thead><tr><th>現在の国庫残高</th><th>デバフ段階</th></tr></thead><tbody>
+<tr><td>0〜99,999</td><td class="green">0段階</td></tr>
+<tr><td>100,000〜199,999</td><td class="red">−1</td></tr>
+<tr><td>200,000〜299,999</td><td class="red">−2</td></tr>
+<tr><td>300,000〜399,999</td><td class="red">−3</td></tr>
+<tr><td>以降10万国庫増えるごと</td><td class="red">さらに−1</td></tr>
+</tbody></table>
+<p>対象：人的資源と🟨を除く全資源の毎日生産。</p>
+<p class="note">デバフは各対象資源の毎日生産量に適用します。国庫残高が減れば、段階も再計算します。</p>
+</section>
+
+<section class="section">
+<h2>🧮 国庫デバフ計算機</h2>
+<p class="note">国庫残高を入力すると、現在のデバフ段階を自動計算します。</p>
+<div class="calc-grid">
+<div class="field"><label for="treasury">現在の国庫残高</label><input id="treasury" type="number" min="0" step="1" value="250000"></div>
+<div class="field"><label for="production">対象資源の毎日生産量</label><input id="production" type="number" min="0" step="1" value="8"></div>
+</div>
+<div class="result" aria-live="polite">
+<div>デバフ段階：<strong id="stage">−2</strong></div>
+<div>適用後の毎日生産量：<strong id="after">6</strong></div>
+<p class="note" id="detail">国庫残高に応じて自動更新します。</p>
+</div>
+</section>
+</main>
+<footer>国家運営オープンチャット用｜税金ルールガイド</footer>
+<script>
+const treasury=document.getElementById('treasury'), production=document.getElementById('production');
+function update(){
+ const t=Math.max(0,Math.floor(Number(treasury.value)||0));
+ const p=Math.max(0,Math.floor(Number(production.value)||0));
+ const stage=Math.floor(t/100000);
+ document.getElementById('stage').textContent=stage===0?'0（デバフなし）':'−'+stage;
+ document.getElementById('after').textContent=p-stage;
+ document.getElementById('detail').textContent=`国庫 ${t.toLocaleString('ja-JP')} 国庫 → ${stage}段階。人的資源・🟨には適用しません。`;
+}
+treasury.addEventListener('input',update); production.addEventListener('input',update); update();
+</script>
+</body></html>
